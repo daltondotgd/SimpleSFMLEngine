@@ -83,7 +83,7 @@ void Engine::init(const sf::VideoMode& videoMode, const std::string& title, int 
     world = wrld;
     createWindow(videoMode, title, frameRateLimit, style, settings);
 
-    world->initNode();
+    world->init();
     run();
 }
 

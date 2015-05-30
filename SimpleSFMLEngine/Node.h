@@ -29,7 +29,6 @@ public:
     sf::BlendMode getBlendMode();
 
 protected:
-    virtual void initNode();
     virtual void updateNode();
     virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
     friend class Engine;

@@ -24,6 +24,7 @@ void Node::update()
 void Node::add(Node * child)
 {
     child->parent = this;
+    child->init();
     children.push_back(child);
 }
 
@@ -106,15 +107,6 @@ void Node::setBlendMode(sf::BlendMode mode)
 sf::BlendMode Node::getBlendMode()
 {
     return blendMode;
-}
-
-void Node::initNode()
-{
-    init();
-    for (auto& child : children)
-    {
-        child->initNode();
-    }
 }
 
 void Node::updateNode()

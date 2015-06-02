@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Node.h"
 
-#include "Engine.h"
-
 Node::Node()
 {
 }
@@ -21,14 +19,19 @@ void Node::update()
 {
 }
 
-void Node::add(Node * child)
+void Node::add(Node* child)
 {
     child->parent = this;
-    child->init();
+    if (active)
+    {
+        child->engine = engine;
+        child->active = true;
+        child->init();
+    }
     children.push_back(child);
 }
 
-void Node::remove(Node * child)
+void Node::remove(Node* child)
 {
     child->toBeRemoved = true;
 }
@@ -65,7 +68,7 @@ void Node::clearChildren()
     children.clear();
 }
 
-void Node::render(sf::RenderTarget & target, sf::RenderStates states) const
+void Node::render(sf::RenderTarget& target, sf::RenderStates states) const
 {
 }
 
@@ -89,7 +92,7 @@ void Node::setShader(std::string shaderName)
     shader = Engine::getInstance().getShaderManager()[shaderName];
 }
 
-sf::Shader * Node::getShader()
+sf::Shader * Node::getShader() const
 {
     return shader;
 }
@@ -104,9 +107,43 @@ void Node::setBlendMode(sf::BlendMode mode)
     blendMode = mode;
 }
 
-sf::BlendMode Node::getBlendMode()
+sf::BlendMode Node::getBlendMode() const
 {
     return blendMode;
+}
+
+Engine& Node::getEngine() const
+{
+    return *engine;
+}
+
+Vector2& Node::getPosition() const
+{
+    auto position = sf::Transformable::getPosition();
+    return Vector2(position.x, position.y);
+}
+
+Vector2& Node::getScale() const
+{
+    auto scale = sf::Transformable::getScale();
+    return Vector2(scale.x, scale.y);
+}
+
+Vector2& Node::getOrigin() const
+{
+    auto origin = sf::Transformable::getOrigin();
+    return Vector2(origin.x, origin.y);
+}
+
+void Node::activate()
+{
+    active = true;
+    init();
+    for (auto child : children)
+    {
+        child->engine = engine;
+        child->activate();
+    }
 }
 
 void Node::updateNode()

@@ -20,20 +20,20 @@ void Player::init()
     setShader("test");
     shader->setParameter("texture", sf::Shader::CurrentTexture);
 
-    registerFrameCallback("idle", 6, []() { LOG("Should show up if 6th frame of idle is playing."); });
+    registerFrameCallback("idle", 6, []() { LOG("Should show up when 6th frame of idle is shown."); });
 }
 
 void Player::update()
 {
     shader->setParameter("time", Engine::getInstance().globalTime());
 
-    sf::Vector2f direction;
+    Vector2 direction;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) direction.x -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) direction.x += 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) direction.y -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) direction.y += 1;
-    //move(direction);
-    move(cos(Engine::getInstance().globalTime() / 2.f), cos(Engine::getInstance().globalTime()));
+    move(direction);
+    //move(cos(Engine::getInstance().globalTime() / 2.f), cos(Engine::getInstance().globalTime()));
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) getParent()->remove(testRect);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) toggleAnimation();

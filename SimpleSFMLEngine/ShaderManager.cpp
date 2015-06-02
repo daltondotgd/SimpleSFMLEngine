@@ -25,8 +25,8 @@ void ShaderManager::preloadShader(const std::string & path)
     if (shaders.find(path) == shaders.end())
     {
         auto shader = new sf::Shader();
-        if (shader->loadFromFile(shadersPath + path + ".vsh", sf::Shader::Vertex)
-            && shader->loadFromFile(shadersPath + path + ".fsh", sf::Shader::Fragment))
+        if (shader->loadFromFile(shadersPath + path + ".vsh", 
+                                 shadersPath + path + ".fsh"))
             shaders[path] = shader;
     }
 }

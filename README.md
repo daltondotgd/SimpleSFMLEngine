@@ -2,29 +2,34 @@
 
 ## Todo list
 
-1. Text object
+1. ~~Text object~~
+1. ~~Vector math~~
+1. ~~Camera~~
+1. ~~HUD~~
 1. Input manager - mouse, keyboard & pad
-1. Vector math
+1. Simple physics and collision handling
 1. Sounds and music advanced support
 1. Simple tile maps support
-1. Simple physics and collision handling
 1. Game!
 
 ## Maybe
 
+1. Actions
 1. Configs
 1. Scripting
-1. Actions
-1. Threading
+1. Threading `// nope`
 
 ```cpp
 // Starting engine
-Engine::getInstance().init(sf::VideoMode(800, 600), "Best game evar!", 60, gameWorld);
+Engine::getInstance().init(sf::VideoMode(800, 600), "Best game evar!", 60, gameWorld, sf::Style::None, settings, false);
 /*
  * 1. Video mode
  * 2. Title
  * 3. FPS limit
- * 3. World
+ * 4. World
+ * 5. Style
+ * 6. ContextSettings
+ * 7. Vertical sync
  */
 ```
 
@@ -34,10 +39,28 @@ Node::add(Node* node);
 ```
 
 ```cpp
-// Node methods to be overdriven
-virtual void init();															// Called whed node is being added to scene
-virtual void update();															// Called every frame
-virtual void render(sf::RenderTarget& renderTarget, sf::RenderStates states);	// Called every frame
+// Getting time in seconds
+
+// In constructor - remember to include "Engine.h"
+Engine::getInstance().deltaTime();
+Engine::getInstance().globalTime();
+
+// In init(), update() and draw(...) or methods called by them
+getEngine()->deltaTime();
+getEngine()->globalTime();
+```
+
+```cpp
+/*
+ * Node methods to be overdriven
+ */
+ 
+// Called after node is being added to scene - you gain access to return values getEngine() and getParent() here
+virtual void init();
+// Called every frame for updating your Node
+virtual void update();
+// Called every frame for drawing your Node
+virtual void render(sf::RenderTarget& renderTarget, sf::RenderStates states);
 ```
 
 ```cpp
@@ -46,8 +69,8 @@ class AnimatedSprite;
 class FPSCounter;
 class Node;
 class Sprite;
+class Text;
 class World;
 --------------- TODO ---------------
 // class Action;
-// class Text;
 ```

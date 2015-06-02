@@ -2,6 +2,7 @@
 #include "Engine.h"
 
 #include "World.h"
+#include "HUD.h"
 
 Engine::Engine()
 {
@@ -72,18 +73,41 @@ ShaderManager& Engine::getShaderManager()
     return shaderManager;
 }
 
-void Engine::createWindow(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit, sf::Uint32 style, const sf::ContextSettings& settings)
+sf::View& Engine::getCamera()
 {
-    window = new sf::RenderWindow(videoMode, title, style, settings);
-    window->setFramerateLimit(frameRateLimit);
+    return camera;
 }
 
-void Engine::init(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit, World* wrld, sf::Uint32 style, const sf::ContextSettings& settings)
+void Engine::setWorld(World* newWorld)
 {
-    world = wrld;
-    createWindow(videoMode, title, frameRateLimit, style, settings);
+    world = newWorld;
+    world->engine = this;
+    world->parent = nullptr;
+    world->activate();
+}
 
-    world->init();
+void Engine::setHUD(HUD * newHUD)
+{
+    hud = newHUD;
+    hud->engine = this;
+    hud->parent = nullptr;
+    hud->activate();
+}
+
+void Engine::init(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit, World* wrld, sf::Uint32 style, const sf::ContextSettings& settings, bool vsync)
+{
+    window = new sf::RenderWindow(videoMode, title, style, settings);
+    window->setVerticalSyncEnabled(vsync);
+    window->setFramerateLimit(frameRateLimit);
+
+    camera.setCenter(videoMode.width / 2, videoMode.height / 2);
+    camera.setSize(videoMode.width, videoMode.height);
+
+    world = wrld;
+    world->engine = this;
+    world->parent = nullptr;
+    world->activate();
+
     run();
 }
 
@@ -102,6 +126,8 @@ sf::Clock Engine::getClock()
     return clock;
 }
 
+std::string text = "";
+
 void Engine::handleEvents()
 {
     sf::Event event;
@@ -111,10 +137,14 @@ void Engine::handleEvents()
             window->close();
 
         if (event.type == sf::Event::LostFocus)
+        {
             suspended = true;
+        }
 
         if (event.type == sf::Event::GainedFocus)
+        {
             suspended = false;
+        }
 
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
             exit(0);
@@ -124,8 +154,8 @@ void Engine::handleEvents()
 void Engine::mainLoop()
 {
     clock.restart();
-    update();
     render();
+    update();
     world->performRemove();
     dt = clock.getElapsedTime().asSeconds();
     time += dt;
@@ -134,14 +164,22 @@ void Engine::mainLoop()
 void Engine::update()
 {
     world->updateNode();
+    camera.move(0, cosf(time));
 }
 
 void Engine::render()
 {
     window->clear();
+    window->setView(camera);
 
     sf::RenderStates states;
     world->draw(*window, states);
+
+    if (hud)
+    {
+        window->setView(window->getDefaultView());
+        hud->draw(*window, states);
+    }
 
     window->display();
 }

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "FPSCounter.h"
 #include "Engine.h"
+#include "HUD.h"
 
 GameWorld::GameWorld()
     : World()
@@ -20,7 +21,11 @@ void GameWorld::init()
     player = new Player();
     add(player);
 
+    getEngine().getCamera().zoom(.25f);
+
 #ifdef _DEBUG
-    add(new FPSCounter(60));
+    auto hud = new HUD();
+    hud->add(new FPSCounter(60));
+    getEngine().setHUD(hud);
 #endif
 }

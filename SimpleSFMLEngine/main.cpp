@@ -17,11 +17,15 @@ int main()
 #endif
 
     auto gameWorld = new GameWorld();
+    sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
+    settings.antialiasingLevel = 8;
 
 #ifdef _DEBUG
-    Engine::getInstance().init(sf::VideoMode(800, 600), "Best game evar!", 60, gameWorld);
+    Engine::getInstance().init(sf::VideoMode(800, 600), "Best game evar!", 60, gameWorld, sf::Style::Default, settings);
 #else
-    Engine::getInstance().init(sf::VideoMode::getDesktopMode(), "Best game evar!", 60, gameWorld, sf::Style::Fullscreen);
+    Engine::getInstance().init(sf::VideoMode::getDesktopMode(), "Best game evar!", 60, gameWorld, sf::Style::None, settings);
 #endif
 
     return 0;

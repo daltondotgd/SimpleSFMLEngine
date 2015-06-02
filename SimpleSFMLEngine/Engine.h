@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector2.h"
+
 #include "ResourceManager.h"
 #include "ShaderManager.h"
 
@@ -8,7 +10,7 @@ class Engine
 public:
     static Engine& getInstance();
 
-    void init(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit, class World* world, sf::Uint32 style = sf::Style::Default, const sf::ContextSettings& settings = sf::ContextSettings());
+    void init(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit, class World* world, sf::Uint32 style = sf::Style::Default, const sf::ContextSettings& settings = sf::ContextSettings(), bool vsync = false);
     class World* getWorld();
     sf::RenderWindow* getWindow();
     sf::Clock getClock();
@@ -22,8 +24,12 @@ public:
     ResourceManager<sf::Music>& getMusicManager();
     ShaderManager& getShaderManager();
 
+    sf::View& getCamera();
+
+    void setWorld(class World* newWorld);
+    void setHUD(class HUD* newHUD);
+
 private:
-    void createWindow(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit = 60, sf::Uint32 style = sf::Style::Default, const sf::ContextSettings& settings = sf::ContextSettings());
     void run();
 
     void handleEvents();
@@ -39,8 +45,11 @@ private:
     ShaderManager shaderManager;
 
     class World* world;
+    class HUD* hud;
     sf::RenderWindow* window;
     sf::Clock clock;
+
+    sf::View camera;
 
     bool suspended{ false };
 

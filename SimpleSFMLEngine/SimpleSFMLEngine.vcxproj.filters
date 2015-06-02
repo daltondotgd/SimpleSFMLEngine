@@ -21,24 +21,18 @@
     <Filter Include="Resource Files\shaders">
       <UniqueIdentifier>{69b87015-a20b-46ec-9bf0-a94ca546ba4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Engine\Objects">
+      <UniqueIdentifier>{752c0669-7f1d-4148-9620-e28c53f76231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Engine\Managers">
+      <UniqueIdentifier>{4774bb30-8f51-4f88-b219-c347c9531e2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
       <Filter>Source\Engine</Filter>
     </ClInclude>
     <ClInclude Include="helpers.h">
-      <Filter>Source\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Source\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderManager.h">
-      <Filter>Source\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Source\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
       <Filter>Source\Engine</Filter>
     </ClInclude>
     <ClInclude Include="GameWorld.h">
@@ -53,30 +47,39 @@
     <ClInclude Include="targetver.h">
       <Filter>Source\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatedSprite.h">
-      <Filter>Source\Engine</Filter>
+    <ClInclude Include="World.h">
+      <Filter>Source\Engine\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Source\Engine</Filter>
+    <ClInclude Include="Sprite.h">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Source\Engine\Objects</Filter>
     </ClInclude>
     <ClInclude Include="FPSCounter.h">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSprite.h">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Source\Engine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Source\Engine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
       <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
-      <Filter>Source\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>Source\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderManager.cpp">
-      <Filter>Source\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
       <Filter>Source\Engine</Filter>
     </ClCompile>
     <ClCompile Include="GameWorld.cpp">
@@ -91,11 +94,32 @@
     <ClCompile Include="main.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedSprite.cpp">
-      <Filter>Source\Engine</Filter>
+    <ClCompile Include="World.cpp">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Source\Engine\Objects</Filter>
     </ClCompile>
     <ClCompile Include="FPSCounter.cpp">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSprite.cpp">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Source\Engine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
       <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,5 +132,6 @@
     <None Include="Resources\shaders\test.fsh">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="..\README.md" />
   </ItemGroup>
 </Project>

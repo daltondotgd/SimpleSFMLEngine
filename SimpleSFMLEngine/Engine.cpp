@@ -94,7 +94,7 @@ void Engine::setHUD(HUD * newHUD)
     hud->activate();
 }
 
-void Engine::init(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit, World* wrld, sf::Uint32 style, const sf::ContextSettings& settings, bool vsync)
+void Engine::init(const sf::VideoMode& videoMode, const std::string& title, int frameRateLimit, World* world, sf::Uint32 style, const sf::ContextSettings& settings, bool vsync)
 {
     window = new sf::RenderWindow(videoMode, title, style, settings);
     window->setVerticalSyncEnabled(vsync);
@@ -103,10 +103,7 @@ void Engine::init(const sf::VideoMode& videoMode, const std::string& title, int 
     camera.setCenter(videoMode.width / 2, videoMode.height / 2);
     camera.setSize(videoMode.width, videoMode.height);
 
-    world = wrld;
-    world->engine = this;
-    world->parent = nullptr;
-    world->activate();
+    setWorld(world);
 
     run();
 }
@@ -148,6 +145,8 @@ void Engine::handleEvents()
 
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
             exit(0);
+
+        world->passEvent(event);
     }
 }
 
@@ -164,14 +163,14 @@ void Engine::mainLoop()
 void Engine::update()
 {
     world->updateNode();
-    camera.move(0, cosf(time));
+    hud->updateNode();
 }
 
 void Engine::render()
 {
-    window->clear();
     window->setView(camera);
 
+    window->clear();
     sf::RenderStates states;
     world->draw(*window, states);
 

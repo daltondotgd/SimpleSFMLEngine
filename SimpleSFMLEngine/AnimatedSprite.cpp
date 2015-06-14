@@ -161,7 +161,7 @@ void AnimatedSprite::updateNode()
     Sprite::updateNode();
 }
 
-void AnimatedSprite::registerFrameCallback(std::string animation, int frame, std::function<void()> callback)
+void AnimatedSprite::registerAnimationCallback(std::string animation, std::function<void()> callback, int frame)
 {
     frameCallbacks[animation][frame - 1] = callback;
 }

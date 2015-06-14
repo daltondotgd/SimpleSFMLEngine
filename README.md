@@ -14,7 +14,7 @@
 
 ## Maybe
 
-1. Actions
+1. ~~Actions~~
 1. Configs
 1. Scripting
 1. Threading `// nope`
@@ -46,8 +46,8 @@ Engine::getInstance().deltaTime();
 Engine::getInstance().globalTime();
 
 // In init(), update() and draw(...) or methods called by them
-getEngine()->deltaTime();
-getEngine()->globalTime();
+getEngine().deltaTime();
+getEngine().globalTime();
 ```
 
 ```cpp

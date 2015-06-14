@@ -7,10 +7,11 @@ class Node
 {
 public:
     Node();
-    ~Node();
+    virtual ~Node();
 
     virtual void init();
     virtual void update();
+    virtual void recieveEvent(const sf::Event& event);
 
     virtual void add(Node* child);
     virtual void remove(Node* child);
@@ -19,7 +20,7 @@ public:
 
     virtual void render(sf::RenderTarget & target, sf::RenderStates states) const;
 
-    Node* getParent() const;
+    Node& getParent() const;
     std::vector<Node*> getChildren() const;
 
     void setShader(sf::Shader* shaderProgram);
@@ -32,14 +33,15 @@ public:
 
     Engine& getEngine() const;
 
-    Vector2& getPosition() const;
-    Vector2& getScale() const;
-    Vector2& getOrigin() const;
+    const Vector2 getPosition() const;
+    const Vector2 getScale() const;
+    const Vector2 getOrigin() const;
 
 protected:
     virtual void activate();
     virtual void updateNode();
     virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
+    virtual void passEvent(const sf::Event& event);
     friend Engine;
 
     Engine* engine{ nullptr };

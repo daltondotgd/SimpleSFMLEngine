@@ -29,7 +29,7 @@ public:
 
     virtual void updateNode() override;
 
-    void registerFrameCallback(std::string animation, int frame, std::function<void()> callback);
+    void registerAnimationCallback(std::string animation, std::function<void()> callback, int frame = 0);
 
 protected:
     std::map<std::string, Animation> animations;

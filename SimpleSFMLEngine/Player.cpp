@@ -2,6 +2,7 @@
 #include "Player.h"
 
 #include "Engine.h"
+#include "Shake.h"
 
 Player::Player()
     : AnimatedSprite("player2")
@@ -20,7 +21,7 @@ void Player::init()
     setShader("test");
     shader->setParameter("texture", sf::Shader::CurrentTexture);
 
-    registerFrameCallback("idle", 6, []() { LOG("Should show up when 6th frame of idle is shown."); });
+    registerAnimationCallback("idle", []() { LOG("Should show up when 6th frame of idle is shown."); }, 6);
 }
 
 void Player::update()
@@ -35,6 +36,7 @@ void Player::update()
     move(direction);
     //move(cos(Engine::getInstance().globalTime() / 2.f), cos(Engine::getInstance().globalTime()));
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) getParent()->remove(testRect);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) remove(testRect);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) add(new Shake());
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) toggleAnimation();
 }

@@ -19,6 +19,10 @@ void Node::update()
 {
 }
 
+void Node::recieveEvent(const sf::Event& event)
+{
+}
+
 void Node::add(Node* child)
 {
     child->parent = this;
@@ -42,10 +46,11 @@ void Node::performRemove()
     {
         if ((*child)->toBeRemoved)
         {
-            (*child)->clearChildren();
-            delete (*child);
-            (*child) = nullptr;
+            auto tmp = *child;
             child = children.erase(child);
+            tmp->clearChildren();
+            delete tmp;
+            tmp = nullptr;
         }
         else
         {
@@ -72,9 +77,9 @@ void Node::render(sf::RenderTarget& target, sf::RenderStates states) const
 {
 }
 
-Node* Node::getParent() const
+Node& Node::getParent() const
 {
-    return parent;
+    return *parent;
 }
 
 std::vector<Node*> Node::getChildren() const
@@ -117,19 +122,19 @@ Engine& Node::getEngine() const
     return *engine;
 }
 
-Vector2& Node::getPosition() const
+Vector2 const Node::getPosition() const
 {
     auto position = sf::Transformable::getPosition();
     return Vector2(position.x, position.y);
 }
 
-Vector2& Node::getScale() const
+Vector2 const Node::getScale() const
 {
     auto scale = sf::Transformable::getScale();
     return Vector2(scale.x, scale.y);
 }
 
-Vector2& Node::getOrigin() const
+Vector2 const Node::getOrigin() const
 {
     auto origin = sf::Transformable::getOrigin();
     return Vector2(origin.x, origin.y);
@@ -137,12 +142,15 @@ Vector2& Node::getOrigin() const
 
 void Node::activate()
 {
-    active = true;
-    init();
-    for (auto child : children)
+    if (!active)
     {
-        child->engine = engine;
-        child->activate();
+        active = true;
+        init();
+        for (auto child : children)
+        {
+            child->engine = engine;
+            child->activate();
+        }
     }
 }
 
@@ -167,5 +175,15 @@ void Node::draw(sf::RenderTarget & target, sf::RenderStates states) const
     for (auto& child : children)
     {
         child->draw(target, states);
+    }
+}
+
+void Node::passEvent(const sf::Event& event)
+{
+    recieveEvent(event);
+
+    for (auto& child : children)
+    {
+        child->recieveEvent(event);
     }
 }

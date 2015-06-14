@@ -27,6 +27,9 @@
     <Filter Include="Source\Engine\Managers">
       <UniqueIdentifier>{4774bb30-8f51-4f88-b219-c347c9531e2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Engine\Objects\Actions">
+      <UniqueIdentifier>{c65e90de-da50-450b-84df-2120333e25a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -74,8 +77,17 @@
     <ClInclude Include="Vector2.h">
       <Filter>Source\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>Source\Engine\Objects\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Shake.h">
+      <Filter>Source\Engine\Objects\Actions</Filter>
+    </ClInclude>
     <ClInclude Include="HUD.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SATWorld.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -118,8 +130,17 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Source\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Action.cpp">
+      <Filter>Source\Engine\Objects\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Shake.cpp">
+      <Filter>Source\Engine\Objects\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SATWorld.cpp">
+      <Filter>Source\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,12 @@ Vector2::Vector2(float xorangle, float yormagnitude, bool fromAngleAndMag)
     }
 }
 
+Vector2::Vector2(sf::Vector2f other)
+{
+    x = other.x;
+    y = other.y;
+}
+
 Vector2 Vector2::operator*(float scalar) const
 {
     return Vector2(x * scalar, y * scalar);

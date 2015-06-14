@@ -4,12 +4,18 @@ class Vector2 :
 {
 public:
     Vector2(float xorangle = 0, float yormagnitude = 0, bool fromAngleAndMag = false);
+    Vector2(sf::Vector2f other);
 
     Vector2 operator*(float scalar) const;
     Vector2 operator/(float scalar) const;
     Vector2 operator*(const Vector2& other) const;
     Vector2 operator+(const Vector2& other) const;
     Vector2 operator-(const Vector2& other) const;
+    friend std::ostream& operator<<(std::ostream& os, const Vector2& vector)
+    {
+        os << "(" << vector.x << ", " << vector.y << ")";
+        return os;
+    }
 
     void rotate(float angle, const Vector2& axis = Vector2(0, 0));
     float angle(const Vector2& other = Vector2(1, 0)) const;
@@ -26,3 +32,12 @@ public:
     static Vector2 lerp(const Vector2& from, const Vector2& to, float t);
 };
 
+inline Vector2 operator*(float left, const Vector2& right)
+{
+    return{ left * right.x, left * right.y };
+}
+
+inline Vector2 operator-(const Vector2& right)
+{
+    return { -right.x, -right.y };
+}

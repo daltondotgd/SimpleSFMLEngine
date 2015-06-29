@@ -22,6 +22,8 @@
 1. Scripting
 1. Threading `// nope`
 
+## Quick start
+
 ```cpp
 // Starting engine
 Engine::getInstance().init(sf::VideoMode(800, 600), "Best game evar!", 60, gameWorld, sf::Style::None, settings, false);

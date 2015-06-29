@@ -4,6 +4,7 @@
 #include "HUD.h"
 #include "FPSCounter.h"
 #include "Text.h"
+#include "PhysicalNode.h"
 
 SATWorld::SATWorld()
 {
@@ -32,6 +33,11 @@ void SATWorld::init()
     rectB.setOrigin(100, 50);
     rectB.setPosition(200, 300);
     rectB.rotate(15);
+
+    auto physnode = new PhysicalNode();
+    physnode->setCollisionShape(new sf::RectangleShape(Vector2(100, 100)));
+    physnode->setPosition(100, 100);
+    add(physnode);
 
     auto hud = new HUD();
     getEngine().setHUD(hud);
@@ -157,8 +163,37 @@ MinMax getMinMax(const sf::Shape& shape, Vector2 axis)
     return { min, max };
 }
 
+struct ResultingPoint
+{
+    bool exists{ false };
+    Vector2 point{ 0, 0 };
+};
+
+// http://www.ahristov.com/tutorial/geometry-games/intersection-segments.html
+ResultingPoint intersection(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
+{
+    ResultingPoint result;
+
+    auto d = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
+    if (d == 0) return result;
+
+    Vector2 p;
+    p.x = ((p3.x - p4.x) * (p1.x * p2.y - p1.y * p2.x) - (p1.x - p2.x) * (p3.x * p4.y - p3.y * p4.x)) / d;
+    p.y = ((p3.y - p4.y) * (p1.x * p2.y - p1.y * p2.x) - (p1.y - p2.y) * (p3.x * p4.y - p3.y * p4.x)) / d;
+    result.point = p;
+
+    if (p.x < std::min(p1.x, p2.x) || p.x > std::max(p1.x, p2.x)) return result;
+    if (p.x < std::min(p3.x, p4.x) || p.x > std::max(p3.x, p4.x)) return result;
+
+    result.exists = true;
+    return result;
+}
+
+std::vector<Vector2> intersections;
+
 bool collides(const sf::Shape& A, const sf::Shape& B) //const
 {
+    intersections.clear();
     std::vector<Vector2> normalsA(A.getPointCount() / 2);
     std::vector<Vector2> normalsB(B.getPointCount() / 2);
 
@@ -205,6 +240,36 @@ bool collides(const sf::Shape& A, const sf::Shape& B) //const
         }
     }
 
+    if (!separated)
+    {
+        int count = 0;
+        for (int n = 0; n < A.getPointCount(); ++n)
+        {
+            int i = n + 1;
+            if (i >= A.getPointCount()) i = 0;
+
+            for (int k = 0; k < B.getPointCount(); ++k)
+            {
+                int j = k + 1;
+                if (j >= B.getPointCount()) j = 0;
+
+                auto p1 = A.getTransform() * A.getPoint(n);
+                auto p2 = A.getTransform() * A.getPoint(i);
+                auto p3 = B.getTransform() * B.getPoint(k);
+                auto p4 = B.getTransform() * B.getPoint(j);
+
+                auto p = intersection(p1, p2, p3, p4);
+                if (p.exists)
+                {
+                    intersections.push_back(p.point);
+                    break;
+                }
+                count++;
+            }
+        }
+        LOGV(count);
+    }
+
     return !separated;
 }
 
@@ -216,7 +281,7 @@ void SATWorld::update()
         collisionInfoText->setString("collides: false");
 }
 
-void SATWorld::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void SATWorld::render(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(verts, vertsCount, sf::Lines);
     target.draw(rectA, states);
@@ -243,5 +308,22 @@ void SATWorld::draw(sf::RenderTarget& target, sf::RenderStates states) const
         auto mouseStr = "mouse: (" + std::to_string((int)current.x) + ", " + std::to_string((int)current.y) + ")";
         if (lmbPressed) mouseStr += ", length: " + std::to_string((current - start).mag());
         mouseInfoText->setString(mouseStr);
+    }
+
+    for (auto p : intersections)
+    {
+        auto hor = Vector2(0, 10);
+        auto vert = Vector2(10, 0);
+        sf::Vertex x[] = { sf::Vertex(p - hor, sf::Color::Cyan), sf::Vertex(p + hor, sf::Color::Cyan),
+            sf::Vertex(p - vert, sf::Color::Cyan), sf::Vertex(p + vert, sf::Color::Cyan) };
+        target.draw(x, 4, sf::Lines);
+
+        sf::CircleShape s(10);
+        s.setFillColor(sf::Color::Transparent);
+        s.setOutlineColor(sf::Color::Cyan);
+        s.setOutlineThickness(1);
+        s.setOrigin(10, 10);
+        s.setPosition(p);
+        target.draw(s);
     }
 }

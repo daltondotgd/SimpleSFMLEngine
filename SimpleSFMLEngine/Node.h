@@ -15,6 +15,7 @@ public:
 
     virtual void add(Node* child);
     virtual void remove(Node* child);
+    virtual void beforeRemoved();
     virtual void performRemove();
     virtual void clearChildren();
 

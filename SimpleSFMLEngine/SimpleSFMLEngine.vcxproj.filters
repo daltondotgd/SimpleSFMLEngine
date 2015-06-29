@@ -30,6 +30,9 @@
     <Filter Include="Source\Engine\Objects\Actions">
       <UniqueIdentifier>{c65e90de-da50-450b-84df-2120333e25a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Engine\Physics">
+      <UniqueIdentifier>{97ae2b04-a20e-4dc1-9d42-07cca78df25e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -89,6 +92,12 @@
     <ClInclude Include="SATWorld.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicalNode.h">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicalWorld.h">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -141,6 +150,12 @@
     </ClCompile>
     <ClCompile Include="SATWorld.cpp">
       <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicalNode.cpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicalWorld.cpp">
+      <Filter>Source\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,20 +2,23 @@
 
 ## Todo list
 
+1. ~~Core engine~~
+1. ~~Advanced scene tree~~
+1. ~~Shaders handling~~
 1. ~~Text object~~
 1. ~~Vector math~~
 1. ~~Camera~~
 1. ~~HUD~~
-1. Input manager - mouse, keyboard & pad
-1. Simple physics and collision handling
-1. Sounds and music advanced support
+1. Input manager - mouse, keyboard & pad (almost ready, will be added with configs)
+1. Simple physics and collision handling (almost ready - collisions already implemented, physics engine under construction)
+1. Sounds and music advanced support (simple support already in)
 1. Simple tile maps support
 1. Game!
 
 ## Maybe
 
 1. ~~Actions~~
-1. Configs
+1. Configs (lib almost ready, need to be added to the engine)
 1. Scripting
 1. Threading `// nope`
 

@@ -10,7 +10,7 @@ public:
 
     virtual void init() override;
     virtual void update() override;
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    virtual void render(sf::RenderTarget& target, sf::RenderStates states) const override;
     virtual void recieveEvent(const sf::Event& event) override;
 
 private:

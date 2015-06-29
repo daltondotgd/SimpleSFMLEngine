@@ -23,6 +23,8 @@ int main()
     settings.stencilBits = 8;
     settings.antialiasingLevel = 8;
 
+    srand(time(NULL));
+
 #ifdef _DEBUG
     Engine::getInstance().init(sf::VideoMode(800, 600), "Best game evar!", 60, gameWorld, sf::Style::Default, settings, true);
 #else

@@ -40,6 +40,10 @@ void Node::remove(Node* child)
     child->toBeRemoved = true;
 }
 
+void Node::beforeRemoved()
+{
+}
+
 void Node::performRemove()
 {
     for (auto child = children.begin(); child != children.end();)

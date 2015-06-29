@@ -95,6 +95,8 @@
     <ClInclude Include="helpers.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="PhysicalNode.h" />
+    <ClInclude Include="PhysicalWorld.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SATWorld.h" />
@@ -116,6 +118,8 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="PhysicalNode.cpp" />
+    <ClCompile Include="PhysicalWorld.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SATWorld.cpp" />
     <ClCompile Include="Shake.cpp" />
